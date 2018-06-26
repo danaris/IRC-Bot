@@ -5,34 +5,31 @@ import logging
 
 # some commands can be executed only if the user's nick is found in this list
 owner = list(set([
-    'paullik',
-    'foobarfoo',
-    'paullik-test',
+    'joshmiller'
 ]))
 
 owner_email = {
-    'foobarfoo': 'foobar@gmail.com',
+    'joshmiller': 'miller.josh@husky.neu.edu',
 }
 
 # server to connect to
-server = 'chat.freenode.net'
+server = 'irc.quakenet.org' #irc.fold.it
 # server's port
 port = 6667
 
 # bot's nicknames
-nicks = list(set(['PPyBot']))
+nicks = list(set(['JoshBot'])) #FolditIRCBot
 # bot's real name
-real_name = 'Paul Python Bot'
+real_name = 'Josh Bot' #Foldit System
 
 # channels to join on startup
 channels = list(set([
-    '#ppybbot',
-    '#test-chan',
+    '#penguinpi' #global, veteran
 ]))
 
 cmds = {
     # core commands list, these commands will be run in the same thread as the bot
-    # and will have acces to the socket that the bot uses
+    # and will have access to the socket that the bot uses
     'core': list(set([
         'quit',
         'join',
@@ -64,8 +61,8 @@ cmds = {
 # smtp server for email_alert
 smtp_server = 'smtp.gmail.com'
 smtp_port = 25
-from_email_address = 'changeme@gmail.com'
-from_email_password = 'p@s$w0rd'
+from_email_address = 'Foldit System <folditircmailingsystem@gmail.com>'
+from_email_password = 'fol3itir5mail6ngsy8tem'
 
 # users should NOT modify below!
 log = os.path.join(os.getcwd(), '..', 'logs', '')
