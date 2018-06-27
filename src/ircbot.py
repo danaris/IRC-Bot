@@ -14,6 +14,9 @@ def run(socket, channels, cmds, nick):
     # buffer for some command received
     buff = ''
     num_workers = sum(len(v) for k, v in cmds.iteritems())
+    registered = False
+    regSent = False
+    joined = False
 
     # TODO: what happens if I use all the workers?
 
@@ -37,6 +40,9 @@ def run(socket, channels, cmds, nick):
                 # command's components after parsing
                 components = parser.parse_command(command)
                 to = send_to(command)
+                
+                if components['sender'] is not '' and not joined:
+                    joined = join_channels(config.channels, socket)
 
                 if 'PING' == components['action']:
                     response = []
@@ -91,6 +97,14 @@ def run(socket, channels, cmds, nick):
                 # sent when the futures finish working from their respective
                 # thread
                 send_response(response, to, socket)
+                logging.debug('OUT: {0}'.format(response))
+                
+                
+                if not regSent:
+                    socket.send('USER JoshBot JoshBot1 JoshBot2 :Josh Bot\r\n')
+                    socket.send('NICK JoshBot\r\n')
+                    regSent = True
+                        
 
                 buff = ''
 
@@ -134,11 +148,13 @@ def main():
         logging.info(content)
         print content
 
-        config.current_nick = name_bot(socket, config.nicks, config.real_name)
-        joined = join_channels(config.channels, socket)
+        #config.current_nick = name_bot(socket, config.nicks, config.real_name)
+        #print config.current_nick
+        #joined = join_channels(config.channels, socket)
+        #print 'joined {0}'.format(joined)
 
-        if joined:
-            run(socket, config.channels, config.cmds, config.current_nick)
+        #if joined:
+        run(socket, config.channels, config.cmds, config.current_nick)
 
         quit_bot(socket)
         socket.close()
